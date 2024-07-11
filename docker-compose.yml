@@ -1,0 +1,43 @@
+---
+services:
+  hledger-bal-try:
+    build:
+      context: .
+    image: hledger-docker-test-full # names the build above
+    container_name: hledger-bal-try
+    volumes:
+      - ./data:/data # Note that the container will fix permissions immediately
+    restart: no
+    environment:
+      LEDGER_FILE: /data/main.ledger
+    command:
+      hledger bal && tail -f /dev/null
+      # this command will exit after printing balance
+      # Once the command exits, docker stops the container immediately.
+      # Try `docker logs -f hledger-bal-try` to confirm it printed bal correctly.
+      # To keep it available till manually stopped, use: `hledger bal && tail -f /dev/null`
+
+  hledger-web-try:
+    depends_on: 
+      - hledger-bal-try # ensures that build step in hledger-bal-try is completed first
+    image: hledger-docker-test-full # references the build made in hledger-bal-try
+    container_name: hledger-web-try
+    ports:
+      - 5000:5000
+      - 5001:5001
+    volumes:
+      - ./data:/data # Note that the container will fix permissions immediately
+    restart: unless-stopped
+    environment:
+      LEDGER_FILE: /data/main.ledger
+    command: |
+      exec /bin/hledger-web              \
+        --server                         \
+        --host=0.0.0.0 --port=5000       \
+        --debug=1 --allow=edit
+    # MUST: --server prevents container from trying to open a browser
+    # MUST: --host should be 0.0.0.0 to access container via mapped host port
+    # --file will override environment variable $LEDGER_FILE
+    # --base-url defaults to http://host:port
+    # --cors=* permits requests from any origin
+    # --allow specifies permitted operations: view|add|edit

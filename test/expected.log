@@ -1,0 +1,39 @@
+Building...
+sha256:3d25b78d41b0c18b06bc34793f9aa4628baa29cd2d7514947a6fe2f39545ac28
+
+
+compose up (in progress)
+Waiting (10 seconds)
+
+
+--- testing hledger bin container ---
+
+==>  CMD1: hledger --version
+hledger 1.34
+
+==>  CMD2: hledger reg
+2024-01-01                      a                           10 SGD        10 SGD
+                                b                          -10 SGD             0
+2024-07-10                      d                                1             1
+                                e                               -1             0
+
+==>  CMD3: hledger bal
+              10 SGD  a
+             -10 SGD  b
+                   1  d
+                  -1  e
+--------------------
+                   0  
+
+==>  LOG:
+
+
+--- testing hledger web container ---
+
+==>  LOG:
+11/Jul/2024:15:19:30 +0000 [Info#yesod-core] Application launched @(yesod-core-1.6.25.1-FcACk6QcksEnmDFvUBlAP:Yesod.Core.Dispatch src/Yesod/Core/Dispatch.hs:188:10)
+hledger-web 1.34, linux-x86_64
+opts: WebOpts {serve_ = True, serve_api_ = False, cors_ = Nothing, host_ = "0.0.0.0", port_ = 5000, base_url_ = "http://0.0.0.0:5000", file_url_ = Nothing, allow_ = EditAccess, cliopts_ = CliOpts {rawopts_ = RawOpts {unRawOpts = [("command","web"),("serve",""),("host","0.0.0.0"),("port","5000"),("debug","1"),("allow","edit")]}, command_ = "web", file_ = [], inputopts_ = InputOpts {mformat_ = Nothing, mrules_file_ = Nothing, aliases_ = [], anon_ = False, new_ = False, new_save_ = True, pivot_ = "", forecast_ = Nothing, verbose_tags_ = False, reportspan_ = DateSpan .., auto_ = False, infer_equity_ = False, infer_costs_ = False, balancingopts_ = BalancingOpts {ignore_assertions_ = False, infer_balancing_costs_ = True, commodity_styles_ = Just (fromList [])}, strict_ = False, _defer = False, _ioDay = 2024-07-11}, reportspec_ = ReportSpec {_rsReportOpts = ReportOpts {period_ = PeriodAll, interval_ = NoInterval, statuses_ = [], conversionop_ = Nothing, value_ = Nothing, infer_prices_ = False, depth_ = Nothing, date2_ = False, empty_ = False, no_elide_ = False, real_ = False, format_ = BottomAligned [FormatField False (Just 20) Nothing TotalField,FormatLiteral "  ",FormatField True (Just 2) Nothing DepthSpacerField,FormatField True Nothing Nothing AccountField], pretty_ = False, querystring_ = [], average_ = False, related_ = False, txn_dates_ = False, balancecalc_ = CalcChange, balanceaccum_ = PerPeriod, budgetpat_ = Nothing, accountlistmode_ = ALFlat, drop_ = 0, declared_ = False, row_total_ = False, no_total_ = False, summary_only_ = False, show_costs_ = False, sort_amount_ = False, percent_ = False, invert_ = False, normalbalance_ = Nothing, color_ = False, transpose_ = False, layout_ = LayoutWide Nothing}, _rsDay = 2024-07-11, _rsQuery = Any, _rsQueryOpts = []}, output_file_ = Nothing, output_format_ = Nothing, debug_ = 1, no_new_accounts_ = False, width_ = Nothing, available_width_ = 80, progstarttime_ = 0s}, socket_ = Nothing}
+Serving web UI and json API at IP address 0.0.0.0 (all interfaces), port 5000
+with base url http://0.0.0.0:5000
+Press ctrl-c to quit

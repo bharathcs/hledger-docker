@@ -1,9 +1,7 @@
 ---
 services:
   hledger-bal-try:
-    build:
-      context: .
-    image: hledger-docker-test-full # names the build above
+    image: hledger-docker-test-full
     container_name: hledger-bal-try
     volumes:
       - ./data:/data # Note that the container will fix permissions immediately
@@ -11,16 +9,14 @@ services:
     environment:
       LEDGER_FILE: /data/main.ledger
     command:
-      hledger bal && tail -f /dev/null
+      tail -f /dev/null
       # this command will exit after printing balance
       # Once the command exits, docker stops the container immediately.
       # Try `docker logs -f hledger-bal-try` to confirm it printed bal correctly.
       # To keep it available till manually stopped, use: `hledger bal && tail -f /dev/null`
 
   hledger-web-try:
-    depends_on: 
-      - hledger-bal-try # ensures that build step in hledger-bal-try is completed first
-    image: hledger-docker-test-full # references the build made in hledger-bal-try
+    image: hledger-docker-test-full
     container_name: hledger-web-try
     ports:
       - 5000:5000

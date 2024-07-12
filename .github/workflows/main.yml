@@ -25,3 +25,11 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: bharathcs2401/hledger:latest,bharathcs2401/hledger:1.34
+
+      - name: Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: bharathcs2401
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: bharathcs2401/hledger
+          short-description: ${{ github.event.repository.description }}

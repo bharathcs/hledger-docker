@@ -1,4 +1,4 @@
-ARG HASKELL_IMG=haskell:buster
+ARG HASKELL_IMG=haskell:buster-slim
 ARG HASKELL_RESOLVER=nightly
 ARG HLEDGER_PACKAGES='hledger-1.34,hledger-web-1.34,hledger-ui-1.34,hledger-interest-1.6.6'
 ARG HLEDGER_GID=3913
